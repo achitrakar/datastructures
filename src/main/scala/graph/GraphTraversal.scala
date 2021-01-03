@@ -11,18 +11,16 @@ class GraphTraversal[T] {
       dfsTraversalResult.addOne(v.getId()) // Store the result
 
       v.getAdjacentVertexes().foreach{ vertex =>
-        visited.contains(vertex.getId()) match {
-          case false => DFSUtil(vertex, visited)
-          case true => // noop
+        if (!visited.contains(vertex.getId())) {
+          DFSUtil(vertex, visited)
         }
       }
     }
 
     val visited: mutable.HashSet[T] = new mutable.HashSet[T]()
     graph.getAllVertex().foreach { vertex =>
-      visited.contains(vertex.getId()) match {
-        case false => DFSUtil(vertex, visited)
-        case true => // noop
+      if (!visited.contains(vertex.getId())) {
+        DFSUtil(vertex, visited)
       }
     }
     dfsTraversalResult.toList
