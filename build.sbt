@@ -1,4 +1,4 @@
-name := "Hackerank"
+name := "DataStructures"
 
 version := "0.1"
 
