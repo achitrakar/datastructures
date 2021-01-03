@@ -68,6 +68,34 @@ class GraphSpec extends AnyFlatSpec {
     val sortedGraph = ts.topSort(stringDirectedGraph)
     sortedGraph.size should be(8)
     val resList = sortedGraph.map(v => v.getId())
-    List("Anthony", "Berbatov", "Evra", "Ferdinand", "Cantona", "Hernandez", "Keane", "David")
+    resList should be(List("Anthony", "Berbatov", "Evra", "Ferdinand", "Cantona", "Hernandez", "Keane", "David"))
+  }
+
+  behavior of "Cycle Detector"
+  it should "detect the graph contains a cycle" in {
+    val graph = new Graph[Int](true)
+    graph.addEdge(4, 1)
+    graph.addEdge(4, 5)
+    graph.addEdge(1, 2)
+    graph.addEdge(5, 6)
+    graph.addEdge(6, 4)
+
+    val detector = new CycleDetector[Int]()
+    val res = detector.hasCycleRecursive(graph)
+    res should be (true)
+    detector.hasCycleIterative(graph) should be(res)
+  }
+
+  it should "detect the graph does not contain a cycle" in {
+    val graph = new Graph[Int](true)
+    graph.addEdge(4, 1)
+    graph.addEdge(4, 5)
+    graph.addEdge(1, 2)
+    graph.addEdge(5, 6)
+
+    val detector = new CycleDetector[Int]()
+    val res = detector.hasCycleRecursive(graph)
+    res should be (false)
+    detector.hasCycleIterative(graph) should be(res)
   }
 }
